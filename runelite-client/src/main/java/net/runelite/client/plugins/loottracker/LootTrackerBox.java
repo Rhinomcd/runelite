@@ -42,6 +42,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import lombok.AccessLevel;
 import lombok.Getter;
 import net.runelite.client.game.AsyncBufferedImage;
 import net.runelite.client.game.ItemManager;
@@ -58,6 +59,7 @@ class LootTrackerBox extends JPanel
 	private final JLabel priceLabel = new JLabel();
 	private final JLabel subTitleLabel = new JLabel();
 	private final ItemManager itemManager;
+	@Getter(AccessLevel.PACKAGE)
 	private final String id;
 
 	@Getter
@@ -167,6 +169,7 @@ class LootTrackerBox extends JPanel
 		buildItems();
 
 		priceLabel.setText(StackFormatter.quantityToStackSize(totalPrice) + " gp");
+		priceLabel.setToolTipText(StackFormatter.formatNumber(totalPrice) + " gp");
 
 		final long kills = getTotalKills();
 		if (kills > 1)
@@ -174,6 +177,7 @@ class LootTrackerBox extends JPanel
 			subTitleLabel.setText("x " + kills);
 		}
 
+		validate();
 		repaint();
 	}
 
